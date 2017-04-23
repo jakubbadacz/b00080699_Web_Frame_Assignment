@@ -20,7 +20,7 @@ use Symfony\Component\Form\FormBuilder;
  * Nurl controller.
  *
  * @Route("nurl")
- * @Security("has_role('ROLE_USER')")
+ *
  */
 class NurlController extends Controller
 {
@@ -49,6 +49,7 @@ class NurlController extends Controller
      *
      * @Route("/new", name="nurl_new")
      * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_USER')")
      */
     public function newAction(Request $request)
     {
@@ -128,6 +129,7 @@ class NurlController extends Controller
      *
      * @Route("/{id}", name="nurl_show")
      * @Method("GET")
+     * @Security("has_role('ROLE_USER')")
      */
     public function showAction(Nurl $nurl)
     {
@@ -144,6 +146,7 @@ class NurlController extends Controller
      *
      * @Route("/{id}/edit", name="nurl_edit")
      * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_USER')")
      */
     public function editAction(Request $request, Nurl $nurl)
     {
@@ -214,6 +217,7 @@ class NurlController extends Controller
      *
      * @Route("/{id}", name="nurl_delete")
      * @Method("DELETE")
+     * @Security("has_role('ROLE_USER')")
      */
     public function deleteAction(Request $request, Nurl $nurl)
     {
@@ -244,66 +248,4 @@ class NurlController extends Controller
             ->getForm()
         ;
     }
-
-//    /**
-//     * Creates a new nurl entity.
-//     *
-//     * @Route("/new", name="nurl_new")
-//     * @Method({"GET", "POST"})
-//     * @param Request $request
-//     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-//     */
-//    public function newAction(Request $request)
-//    {
-//        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Unable to access this page!');
-//        $nurl = new Nurl();
-//        $collections = $repository = $this->getDoctrine()->getRepository('AppBundle:Collection')->findAll();
-//
-//        $form = $this->createFormBuilder($nurl)
-//            ->add('url', TextType::class)
-//            ->add('title', TextType::class)
-//            ->add('content', TextareaType::class)
-//            ->add('collection', EntityType::class, array(
-//                // query choices from this entity
-//                'class' => 'AppBundle:Collection',
-//
-//                // use the User.username property as the visible option string
-//                'choice_label' => 'title',
-//
-//                // used to render a select box, check boxes or radios
-//                'multiple' => false,
-//                'expanded' => true,
-//            ))
-//
-//            ->add('public', ChoiceType::class, array(
-//                'choices' => array(
-//                    'Public' => 'Public',
-//                    'Private' => 'Private'
-//                ),
-//                'required' => true,
-//                'empty_data' => null
-//            ))
-//
-//            ->add('save', SubmitType::class, array('label' => 'Submit Nurl'))
-//            ->getForm();
-//
-//        $form->handleRequest($request);
-//
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            $nurl -> setUser($this->get('security.token_storage')->getToken()->getUser());
-//            $nurl -> setUpvote(0);
-//            $nurl -> setDownvote(0);
-//
-//            $em = $this->getDoctrine()->getManager();
-//            $em->persist($nurl);
-//            $em->flush($nurl);
-//
-//            return $this->redirectToRoute('nurl_show', array('id' => $nurl->getId()));
-//        }
-//
-//        return $this->render('nurl/new.html.twig', array(
-//            'nurl' => $nurl,
-//            'form' => $form->createView(),
-//        ));
-//    }
 }
