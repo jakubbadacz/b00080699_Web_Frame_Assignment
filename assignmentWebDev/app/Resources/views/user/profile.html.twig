@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h1>
+        The profile of: {{ user.username }}
+    </h1>
+    <h3>Email: {{ user.email }}</h3>
+
+    <h3>List of user nurls</h3>
+    {% if user.nurl is defined %}
+        <table>
+        <tr>
+            <th>Title</th>
+            <th>Link</th>
+        </tr>
+        {% for nurl in user.nurl %}
+            <tr>
+                <td>{{ nurl.title }}</td>
+                <td><a href="{{ path('nurl_show', { 'id': nurl.id }) }}">{{ nurl.link }}</a></td>
+            </tr>
+        {% endfor %}
+    {% else %}
+        There is no urls
+    {% endif %}
+    </table>
+
+    <h3>List of user tags</h3>
+    {% if user.tag is defined %}
+        <ul>
+        {% for tag in user.tag %}
+                <li>{{ tag.tagName }}</li>
+        {% endfor %}
+    {% else %}
+        There is no urls
+    {% endif %}
+    </ul>
+
+    <h3>List of user collections</h3>
+    {% if user.collection is defined %}
+        <ul>
+        {% for collection in user.collection %}
+            <li>{{ collection.name }}</li>
+        {% endfor %}
+    {% else %}
+        <li>There is no collections</li>
+    {% endif %}
+    </ul>
+
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% set basket_nurls = app.session.get("basket") %}
+{{ dump(app.session.get("basket")) }}
+
+{% if basket_nurls is null %}
+<p>
+    you have no urls in the collection
+</p>
+{% else %}
+<ul>
+    {% for nurl in basket_nurls %}
+        <li>
+            <hr>
+            id = {{ nurl.id }}
+            <br>
+            nurl title = {{ nurl.nurlTitle }}
+            <br>
+            nurl link = {{ nurl.nurlLink }}
+            <br>
+            nurl note = {{ nurl.nurlNote }}
+            <br>
+            <a href="{{ path('nurls_basket_delete', {'id': nurl.id}) }}">(remove)</a>
+        </li>
+    {% endfor %}
+</ul>
+{% endif %}
+<p>
+    <a href="{{ path('nurls_basket_clear') }}">Clear all items in the collection</a>
+</p>

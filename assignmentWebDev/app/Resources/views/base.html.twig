@@ -1,0 +1,55 @@
+{% set colors = app.session.get('colors') %}
+{# default = blue #}
+{% if colors is null %}
+    {% set default_colors = 'yes' %}
+    {% set colors = {
+    'foreground': 'black',
+    'background': 'white'
+    } %}
+{% endif %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>NURL Manager - {% block pageTitle %}{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+        <style>
+            @import "/css/flash.css";
+            @import "/css/nav.css";
+
+            body{
+                color: {{ colors['foreground'] }};
+                background-color: {{ colors['background'] }};
+            }
+        </style>
+    </head>
+    <body>
+    {% if is_granted('ROLE_USER') %}
+        <header>
+            You are logged in as: <a href="{{ path('user_profile_show', {'id': app.user.id}) }}">{{ app.user.username }}</a>
+            <br>
+            <a href="{{ path('logout') }}">logout</a>
+        </header>
+    {% else %}
+        <p>
+            you are not logged in: <a href="{{ path('login') }}">login</a>
+        </p>
+    {% endif %}
+
+        <hr>
+    <nav>
+        <ul>
+            <li><a href="{{ path('homepage') }}"><h2>Home</h2></a></li>
+            <li><a href="{{ path('user_index') }}"><h2>Users</h2></a></li>
+            <li><a href="{{ path('nurl_index') }}"><h2>Nurls</h2></a></li>
+            <li><a href="{{ path('collection_index') }}"><h2>Collections</h2></a></li>
+            <li><a href="{{ path('tag_index') }}"><h2>Tags</h2></a></li>
+            <li><a href="{{ path('search_index') }}"><h2>Search</h2></a></li>
+        </ul>
+    </nav>
+        {% block body %}
+        {% endblock %}
+
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

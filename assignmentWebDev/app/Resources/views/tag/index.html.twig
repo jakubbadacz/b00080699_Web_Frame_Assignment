@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <style>
+    @import "/css/table.css";
+    </style>
+{% endblock %}
+{% block body %}
+    <h1>Tags list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Author</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tag in tags if not tag.pending %}
+            <tr>
+                <td><a href="{{ path('tag_show', { 'id': tag.id }) }}">{{ tag.id }}</a></td>
+                <td>{{ tag.tagName }}</td>
+                <td>{% if tag.user.username is defined %}<a href="{{ path('user_profile_show', {'id': tag.user.id}) }}">@{{ tag.user.username }}</a>{% else %}Anonymous{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('tag_show', { 'id': tag.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('tag_edit', { 'id': tag.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <ul>
+        <li>
+            <a href="{{ path('tag_pending') }}">Pending tags</a>
+        </li>
+        <li>
+            <a href="{{ path('tag_pending_new') }}">Propose a tag</a>
+        </li>
+        <li>
+            <a href="{{ path('tag_new') }}">Create a new tag</a>
+        </li>
+    </ul>
+{% endblock %}

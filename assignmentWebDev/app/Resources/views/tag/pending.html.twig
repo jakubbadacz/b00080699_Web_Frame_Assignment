@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <style>
+        @import "/css/table.css";
+    </style>
+{% endblock %}
+{% block body %}
+    <h1>Pending Tags</h1>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for tag in tags if tag.pending %}
+            <tr>
+                <td><a href="{{ path('tag_show', { 'id': tag.id }) }}">{{ tag.id }}</a></td>
+                <td>{{ tag.tagName }}</td>
+
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('tag_edit_pending', { 'id': tag.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

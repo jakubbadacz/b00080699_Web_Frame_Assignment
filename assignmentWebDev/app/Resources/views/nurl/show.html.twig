@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ dump() }}
+    <h1>Nurl</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ nurl.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ nurl.title }}</td>
+            </tr>
+            <tr>
+                <th>Link</th>
+                <td><a href="{{ nurl.link }}">{{ nurl.link }}</a></td>
+            </tr>
+            <tr>
+                <th>Note</th>
+                <td>{{ nurl.note }}</td>
+            </tr>
+            <tr>
+                <th>Author</th>
+                <td>{{ nurl.user.username }}</td>
+            </tr>
+            <tr>
+                <th>Collection</th>
+                <td>{{ nurl.collection.name }}</td>
+            </tr>
+            <tr>
+                <th>Tags</th>
+                <td> {% if nurl.tag is defined %}
+
+                        {% for tag in nurl.tag %}
+                            <li>{{ tag }}</li>
+                        {% endfor %}
+                    {% else %}
+                        There is no tags
+                    {% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('nurl_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('nurl_edit', { 'id': nurl.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

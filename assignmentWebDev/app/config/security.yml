@@ -1,0 +1,56 @@
+# To get started with security, check out the documentation:
+# http://symfony.com/doc/current/security.html
+security:
+    role_hierarchy:
+        ROLE_ADMIN:  ROLE_USER
+        ROLE_MODERATOR: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    encoders:
+        AppBundle\Entity\User:
+            algorithm: bcrypt
+
+
+
+
+    # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    providers:
+        our_db_provider:
+            entity:
+                class: AppBundle:User
+                property: username
+#        in_memory:
+#            memory:
+#                users:
+#                    user:
+#                        password: $2y$12$pUaaC6cwub1NkwNvSm/FnuR3rli8YgjIg1Di68hqX4J1TnGpLc2AC
+#                        roles: 'ROLE_USER'
+#                    admin:
+#                        password: $2y$12$ROCN/MhD6U0Rsr0xsrHT/.RETqtgm8nQmdbOsC2o4w4RyHrUhXcvS
+#                        roles: 'ROLE_ADMIN'
+#                    matt:
+#                        password: $2y$12$4UWrrc1pkskcCMDpcj4XzeLVsn5Tlk4zkQJAyrSaoDnOnY1wgHUH2
+#                        roles: 'ROLE_ADMIN'
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            anonymous: ~
+            # activate different ways to authenticate
+            provider: our_db_provider
+            # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+#            http_basic: ~
+            form_login:
+                login_path: login
+                check_path: login
+            logout:
+                path: /logout
+                target: /
+
+            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+
+#    access_control:
+#        - { path: ^/admin, roles: ROLE_ADMIN }

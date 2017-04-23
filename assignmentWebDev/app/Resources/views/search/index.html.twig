@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Search</h1>
+
+    <form action="{{ path('search_result') }}" method="GET">
+    <label for="type">Type:</label><input type="text" name="key">
+    <br>
+    <label for="query">Query:</label><input type="text" name="query">
+    <input type="submit" value="Search" />
+    </form>
+{% endblock %}
